@@ -128,22 +128,23 @@ Number and name of feature: Movies
 
 Estimate of time needed to complete: 1 hour
 
-Start time: _____
+Start time: 09:30
 
-Finish time: _____
+Finish time: 11:00
 
-Actual time needed to complete: _____
+Actual time needed to complete: 1hr 30min
 
 
 Number and name of feature: Yelp
 
 Estimate of time needed to complete: 1 hour
 
-Start time: _____
+Start time: 11:00
 
-Finish time: _____
+Finish time: 12:00
 
-Actual time needed to complete: _____
+Actual time needed to complete: 1hr
+
 
 Number and name of feature: REFACTOR
 
