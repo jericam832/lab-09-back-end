@@ -18,6 +18,7 @@ server.get('/weather', weatherHandler);
 server.get('/trails', trailsHandler);
 server.get('/coordinates', coordHandler);
 server.get('/movies', movieHandler);
+server.get('/yelp', yelpHandler);
 // server.get('/add', addRow);
 server.use('*', notFound);
 server.use(errorHandler);
@@ -111,6 +112,18 @@ function movieHandler(req, res) {
   }).catch(error => errorHandler(error, req, res));
 }
 ///////////////////////////////////////////////////////////////////////
+//Build a path to yelp
+function yelpHandler(req, res) {
+  const url = `https://api.yelp.com/v3/businesses/search?location=${req.query.data}`
+  superagent.get(url).set('Authorization', `Bearer ${process.env.YELP_API_KEY}`).then(value => {
+    const reviews = value.body.businesses.map(data => {
+      return new Yelp(data);
+    });
+    res.status(200).json(reviews);
+  }).catch(error => errorHandler(error, req, res));
+}
+
+///////////////////////////////////////////////////////////////////////
 //Constructor Functions
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -161,6 +174,17 @@ function Movie(movie) {
   this.image_url = 'https://image.tmdb.org/t/p/w500' + movie.poster_path;
   this.popularity = movie.popularity;
   this.released_on = movie.release_date;
+  this.created_at = Date.now();
+}
+///////////////////////////////////////////////////////////////////////////
+//Yelp Constructor
+function Yelp(business) {
+  this.tableName = 'yelps';
+  this.name = business.name;
+  this.image_url = business.image_url;
+  this.price = business.price;
+  this.rating = business.rating;
+  this.url = business.url;
   this.created_at = Date.now();
 }
 // server.listen(PORT, () => {
