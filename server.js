@@ -114,7 +114,7 @@ function movieHandler(req, res) {
 ///////////////////////////////////////////////////////////////////////
 //Build a path to yelp
 function yelpHandler(req, res) {
-  const url = `https://api.yelp.com/v3/businesses/search?location=${req.query.data}`
+  const url = `https://api.yelp.com/v3/businesses/search?location=${req.query.data.id}`
   superagent.get(url).set('Authorization', `Bearer ${process.env.YELP_API_KEY}`).then(value => {
     const reviews = value.body.businesses.map(data => {
       return new Yelp(data);
